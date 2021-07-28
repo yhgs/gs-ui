@@ -5,36 +5,42 @@ import { Trade as V3Trade } from '@uniswap/v3-sdk'
 import { NetworkAlert } from 'components/NetworkAlert/NetworkAlert'
 import { AdvancedSwapDetails } from 'components/swap/AdvancedSwapDetails'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
-import { MouseoverTooltip, MouseoverTooltipContent } from 'components/Tooltip'
-import JSBI from 'jsbi'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { ArrowDown, ArrowLeft, CheckCircle, HelpCircle, Info } from 'react-feather'
+import { MouseoverTooltipContent } from 'components/Tooltip'
+// import { MouseoverTooltip, MouseoverTooltipContent } from 'components/Tooltip'
+// import JSBI from 'jsbi'
+import { useCallback, useContext, useMemo, useState } from 'react'
+// import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { ArrowDown, ArrowLeft, Info } from 'react-feather'
+// import { ArrowDown, ArrowLeft, CheckCircle, HelpCircle, Info } from 'react-feather'
 import ReactGA from 'react-ga'
 import { Link, RouteComponentProps } from 'react-router-dom'
-import { Text } from 'rebass'
+// import { Text } from 'rebass'
 import styled, { ThemeContext } from 'styled-components/macro'
 import AddressInputPanel from '../../components/AddressInputPanel'
-import { ButtonConfirmed, ButtonError, ButtonGray, ButtonLight, ButtonPrimary } from '../../components/Button'
-import { GreyCard } from '../../components/Card'
+import { ButtonGray, ButtonLight } from '../../components/Button'
+// import { ButtonConfirmed, ButtonError, ButtonGray, ButtonLight, ButtonPrimary } from '../../components/Button'
+// import { GreyCard } from '../../components/Card'
 import { AutoColumn } from '../../components/Column'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
-import CurrencyLogo from '../../components/CurrencyLogo'
-import Loader from '../../components/Loader'
+// import CurrencyLogo from '../../components/CurrencyLogo'
+// import Loader from '../../components/Loader'
 import Row, { AutoRow, RowFixed } from '../../components/Row'
 import BetterTradeLink from '../../components/swap/BetterTradeLink'
 import confirmPriceImpactWithoutFee from '../../components/swap/confirmPriceImpactWithoutFee'
 import ConfirmSwapModal from '../../components/swap/ConfirmSwapModal'
-import { ArrowWrapper, Dots, SwapCallbackError, Wrapper } from '../../components/swap/styleds'
+import { ArrowWrapper, Wrapper } from '../../components/swap/styleds'
+// import { ArrowWrapper, Dots, SwapCallbackError, Wrapper } from '../../components/swap/styleds'
 import SwapHeader from '../../components/swap/SwapHeader'
 import TradePrice from '../../components/swap/TradePrice'
 import { SwitchLocaleLink } from '../../components/SwitchLocaleLink'
 import TokenWarningModal from '../../components/TokenWarningModal'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
-import { ApprovalState, useApproveCallbackFromTrade } from '../../hooks/useApproveCallback'
+// import { ApprovalState, useApproveCallbackFromTrade } from '../../hooks/useApproveCallback'
 import { V3TradeState } from '../../hooks/useBestV3Trade'
 import useENSAddress from '../../hooks/useENSAddress'
-import { useERC20PermitFromTrade, UseERC20PermitState } from '../../hooks/useERC20Permit'
-import useIsArgentWallet from '../../hooks/useIsArgentWallet'
+import { useERC20PermitFromTrade } from '../../hooks/useERC20Permit'
+// import { useERC20PermitFromTrade, UseERC20PermitState } from '../../hooks/useERC20Permit'
+// import useIsArgentWallet from '../../hooks/useIsArgentWallet'
 import { useIsSwapUnsupported } from '../../hooks/useIsSwapUnsupported'
 import { useSwapCallback } from '../../hooks/useSwapCallback'
 import useToggledVersion, { Version } from '../../hooks/useToggledVersion'
@@ -49,13 +55,14 @@ import {
   useSwapActionHandlers,
   useSwapState,
 } from '../../state/swap/hooks'
-import { useExpertModeManager, useUserSingleHopOnly } from '../../state/user/hooks'
+import { useUserSingleHopOnly } from '../../state/user/hooks'
+// import { useExpertModeManager, useUserSingleHopOnly } from '../../state/user/hooks'
 import { HideSmall, LinkStyledButton, TYPE } from '../../theme'
 import { computeFiatValuePriceImpact } from '../../utils/computeFiatValuePriceImpact'
 import { getTradeVersion } from '../../utils/getTradeVersion'
 import { isTradeBetter } from '../../utils/isTradeBetter'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
-import { warningSeverity } from '../../utils/prices'
+// import { warningSeverity } from '../../utils/prices'
 import AppBody from '../AppBody'
 
 const StyledInfo = styled(Info)`
@@ -100,7 +107,7 @@ export default function Swap({ history }: RouteComponentProps) {
   const toggleWalletModal = useWalletModalToggle()
 
   // for expert mode
-  const [isExpertMode] = useExpertModeManager()
+  // const [isExpertMode] = useExpertModeManager()
 
   // get version from the url
   const toggledVersion = useToggledVersion()
@@ -115,13 +122,13 @@ export default function Swap({ history }: RouteComponentProps) {
     currencyBalances,
     parsedAmount,
     currencies,
-    inputError: swapInputError,
+    // inputError: swapInputError,
   } = useDerivedSwapInfo(toggledVersion)
 
   const {
     wrapType,
-    execute: onWrap,
-    inputError: wrapInputError,
+    // execute: onWrap,
+    // inputError: wrapInputError,
   } = useWrapCallback(currencies[Field.INPUT], currencies[Field.OUTPUT], typedValue)
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
   const { address: recipientAddress } = useENSAddress(recipient)
@@ -145,7 +152,7 @@ export default function Swap({ history }: RouteComponentProps) {
   const priceImpact = computeFiatValuePriceImpact(fiatValueInput, fiatValueOutput)
 
   const { onSwitchTokens, onCurrencySelection, onUserInput, onChangeRecipient } = useSwapActionHandlers()
-  const isValid = !swapInputError
+  // const isValid = !swapInputError
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
 
   const handleTypeInput = useCallback(
@@ -189,49 +196,50 @@ export default function Swap({ history }: RouteComponentProps) {
       : parsedAmounts[dependentField]?.toSignificant(6) ?? '',
   }
 
-  const userHasSpecifiedInputOutput = Boolean(
-    currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
-  )
-  const routeNotFound = !trade?.route
-  const isLoadingRoute = toggledVersion === Version.v3 && V3TradeState.LOADING === v3TradeState
+  // const userHasSpecifiedInputOutput = Boolean(
+  //   currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
+  // )
+  // const routeNotFound = !trade?.route
+  // const isLoadingRoute = toggledVersion === Version.v3 && V3TradeState.LOADING === v3TradeState
 
   // check whether the user has approved the router on the input token
-  const [approvalState, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage)
+  // const [approvalState, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage)
   const {
-    state: signatureState,
+    // state: signatureState,
     signatureData,
-    gatherPermitSignature,
+    // gatherPermitSignature,
   } = useERC20PermitFromTrade(trade, allowedSlippage)
 
-  const handleApprove = useCallback(async () => {
-    if (signatureState === UseERC20PermitState.NOT_SIGNED && gatherPermitSignature) {
-      try {
-        await gatherPermitSignature()
-      } catch (error) {
-        // try to approve if gatherPermitSignature failed for any reason other than the user rejecting it
-        if (error?.code !== 4001) {
-          await approveCallback()
-        }
-      }
-    } else {
-      await approveCallback()
-    }
-  }, [approveCallback, gatherPermitSignature, signatureState])
+  // const handleApprove = useCallback(async () => {
+  //   if (signatureState === UseERC20PermitState.NOT_SIGNED && gatherPermitSignature) {
+  //     try {
+  //       await gatherPermitSignature()
+  //     } catch (error) {
+  //       // try to approve if gatherPermitSignature failed for any reason other than the user rejecting it
+  //       if (error?.code !== 4001) {
+  //         await approveCallback()
+  //       }
+  //     }
+  //   } else {
+  //     await approveCallback()
+  //   }
+  // }, [approveCallback, gatherPermitSignature, signatureState])
 
   // check if user has gone through approval process, used to show two step buttons, reset on token change
-  const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
+  // const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
 
   // mark when a user has submitted an approval, reset onTokenSelection for input field
-  useEffect(() => {
-    if (approvalState === ApprovalState.PENDING) {
-      setApprovalSubmitted(true)
-    }
-  }, [approvalState, approvalSubmitted])
+  // useEffect(() => {
+  //   if (approvalState === ApprovalState.PENDING) {
+  //     setApprovalSubmitted(true)
+  //   }
+  // }, [approvalState, approvalSubmitted])
 
   const maxInputAmount: CurrencyAmount<Currency> | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
   const showMaxButton = Boolean(maxInputAmount?.greaterThan(0) && !parsedAmounts[Field.INPUT]?.equalTo(maxInputAmount))
 
   // the callback to execute the swap
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { callback: swapCallback, error: swapCallbackError } = useSwapCallback(
     trade,
     allowedSlippage,
@@ -293,28 +301,28 @@ export default function Swap({ history }: RouteComponentProps) {
   const [showInverted, setShowInverted] = useState<boolean>(false)
 
   // warnings on the greater of fiat value price impact and execution price impact
-  const priceImpactSeverity = useMemo(() => {
-    const executionPriceImpact = trade?.priceImpact
-    return warningSeverity(
-      executionPriceImpact && priceImpact
-        ? executionPriceImpact.greaterThan(priceImpact)
-          ? executionPriceImpact
-          : priceImpact
-        : executionPriceImpact ?? priceImpact
-    )
-  }, [priceImpact, trade])
+  // const priceImpactSeverity = useMemo(() => {
+  //   const executionPriceImpact = trade?.priceImpact
+  //   return warningSeverity(
+  //     executionPriceImpact && priceImpact
+  //       ? executionPriceImpact.greaterThan(priceImpact)
+  //         ? executionPriceImpact
+  //         : priceImpact
+  //       : executionPriceImpact ?? priceImpact
+  //   )
+  // }, [priceImpact, trade])
 
-  const isArgentWallet = useIsArgentWallet()
+  // const isArgentWallet = useIsArgentWallet()
 
   // show approve flow when: no error on inputs, not approved or pending, or approved in current session
   // never show if price impact is above threshold in non expert mode
-  const showApproveFlow =
-    !isArgentWallet &&
-    !swapInputError &&
-    (approvalState === ApprovalState.NOT_APPROVED ||
-      approvalState === ApprovalState.PENDING ||
-      (approvalSubmitted && approvalState === ApprovalState.APPROVED)) &&
-    !(priceImpactSeverity > 3 && !isExpertMode)
+  // const showApproveFlow =
+  //   !isArgentWallet &&
+  //   !swapInputError &&
+  //   (approvalState === ApprovalState.NOT_APPROVED ||
+  //     approvalState === ApprovalState.PENDING ||
+  //     (approvalSubmitted && approvalState === ApprovalState.APPROVED)) &&
+  //   !(priceImpactSeverity > 3 && !isExpertMode)
 
   const handleConfirmDismiss = useCallback(() => {
     setSwapState({ showConfirm: false, tradeToConfirm, attemptingTxn, swapErrorMessage, txHash })
@@ -330,7 +338,7 @@ export default function Swap({ history }: RouteComponentProps) {
 
   const handleInputSelect = useCallback(
     (inputCurrency) => {
-      setApprovalSubmitted(false) // reset 2 step UI for approvals
+      // setApprovalSubmitted(false) // reset 2 step UI for approvals
       onCurrencySelection(Field.INPUT, inputCurrency)
     },
     [onCurrencySelection]
@@ -347,7 +355,7 @@ export default function Swap({ history }: RouteComponentProps) {
 
   const swapIsUnsupported = useIsSwapUnsupported(currencies?.INPUT, currencies?.OUTPUT)
 
-  const priceImpactTooHigh = priceImpactSeverity > 3 && !isExpertMode
+  // const priceImpactTooHigh = priceImpactSeverity > 3 && !isExpertMode
 
   return (
     <>
@@ -396,7 +404,7 @@ export default function Swap({ history }: RouteComponentProps) {
                 <ArrowDown
                   size="16"
                   onClick={() => {
-                    setApprovalSubmitted(false) // reset 2 step UI for approvals
+                    // setApprovalSubmitted(false) // reset 2 step UI for approvals
                     onSwitchTokens()
                   }}
                   color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
@@ -502,8 +510,10 @@ export default function Swap({ history }: RouteComponentProps) {
                 ) : null}
               </Row>
             )}
-
-            <div>
+            <ButtonLight onClick={toggleWalletModal}>
+              <Trans>Initiate Swap</Trans>
+            </ButtonLight>
+            {/* <div>
               {swapIsUnsupported ? (
                 <ButtonPrimary disabled={true}>
                   <TYPE.main mb="4px">
@@ -560,7 +570,6 @@ export default function Swap({ history }: RouteComponentProps) {
                             size={'20px'}
                             style={{ marginRight: '8px', flexShrink: 0 }}
                           />
-                          {/* we need to shorten this string on mobile */}
                           {approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED ? (
                             <Trans>You can now trade {currencies[Field.INPUT]?.symbol}</Trans>
                           ) : (
@@ -654,7 +663,7 @@ export default function Swap({ history }: RouteComponentProps) {
                 </ButtonError>
               )}
               {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
-            </div>
+            </div> */}
           </AutoColumn>
         </Wrapper>
       </AppBody>

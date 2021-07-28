@@ -5,7 +5,7 @@ import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsRepo
 import AddressClaimModal from '../components/claim/AddressClaimModal'
 import ErrorBoundary from '../components/ErrorBoundary'
 import Header from '../components/Header'
-import Polling from '../components/Header/Polling'
+// import Polling from '../components/Header/Polling'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
 import { ApplicationModal } from '../state/application/actions'
@@ -82,7 +82,7 @@ export default function App() {
           </HeaderWrapper>
           <BodyWrapper>
             <Popups />
-            <Polling />
+            {/* <Polling /> */}
             <TopLevelModals />
             <Switch>
               <Route exact strict path="/vote" component={Vote} />

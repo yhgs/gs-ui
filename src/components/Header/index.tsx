@@ -11,7 +11,7 @@ import { useState } from 'react'
 import { useDarkModeManager } from 'state/user/hooks'
 // import { useETHBalances } from 'state/wallet/hooks'
 import styled from 'styled-components/macro'
-import Logo from '../../assets/svg/arrows-swap-red.svg'
+import Logo from '../../assets/svg/arrows-swap-blue.svg'
 import LogoDark from '../../assets/svg/logo_white.svg'
 // import { useActiveWeb3React } from '../../hooks/web3'
 // import { ExternalLink } from '../../theme'
@@ -28,7 +28,7 @@ import UniBalanceContent from './UniBalanceContent'
 
 const HeaderFrame = styled.div<{ showBackground: boolean }>`
   display: grid;
-  grid-template-columns: 120px 1fr 120px;
+  grid-template-columns: 120px 1fr 0px;
   align-items: center;
   justify-content: space-between;
   align-items: center;
@@ -266,7 +266,7 @@ export default function Header() {
       </Modal>
       <Title href=".">
         <UniIcon>
-          <img width={'30px'} src={darkMode ? LogoDark : Logo} alt="logo" />
+          <img width={'24px'} src={darkMode ? LogoDark : Logo} alt="logo" />
         </UniIcon>
       </Title>
       {/* <HeaderLinks>
