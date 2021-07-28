@@ -1,32 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react'
-import {
-  BookOpen,
-  Code,
-  Info,
-  MessageCircle,
-  PieChart,
-  Moon,
-  Sun,
-  ChevronRight,
-  ChevronLeft,
-  Check,
-} from 'react-feather'
+// import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef } from 'react'
+// import {
+//   BookOpen,
+//   Code,
+//   Info,
+//   MessageCircle,
+//   PieChart,
+//   Moon,
+//   Sun,
+//   ChevronRight,
+//   ChevronLeft,
+//   Check,
+// } from 'react-feather'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components/macro'
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg'
-import { useActiveWeb3React } from '../../hooks/web3'
+// import { useActiveWeb3React } from '../../hooks/web3'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useToggleModal } from '../../state/application/hooks'
 import { Trans } from '@lingui/macro'
 import { ExternalLink } from '../../theme'
-import { ButtonPrimary } from '../Button'
-import { useDarkModeManager } from 'state/user/hooks'
+// import { ButtonPrimary } from '../Button'
+// import { useDarkModeManager } from 'state/user/hooks'
 
-import { L2_CHAIN_IDS, CHAIN_INFO, SupportedChainId } from 'constants/chains'
-import { LOCALE_LABEL, SupportedLocale, SUPPORTED_LOCALES } from 'constants/locales'
-import { useLocationLinkProps } from 'hooks/useLocationLinkProps'
-import { useActiveLocale } from 'hooks/useActiveLocale'
+// import { L2_CHAIN_IDS, CHAIN_INFO, SupportedChainId } from 'constants/chains'
+// import { LOCALE_LABEL, SupportedLocale, SUPPORTED_LOCALES } from 'constants/locales'
+// import { useLocationLinkProps } from 'hooks/useLocationLinkProps'
+// import { useActiveLocale } from 'hooks/useActiveLocale'
 
 export enum FlyoutAlignment {
   LEFT = 'LEFT',
@@ -38,7 +39,7 @@ const StyledMenuIcon = styled(MenuIcon)`
     stroke: ${({ theme }) => theme.text1};
   }
 `
-
+/*
 const StyledMenuButton = styled.button`
   width: 100%;
   height: 100%;
@@ -64,12 +65,15 @@ const StyledMenuButton = styled.button`
     margin-top: 2px;
   }
 `
+*/
 
+/*
 const UNIbutton = styled(ButtonPrimary)`
   background-color: ${({ theme }) => theme.bg3};
   background: radial-gradient(174.47% 188.91% at 1.84% 0%, #ff007a 0%, #2172e5 100%), #edeef2;
   border: none;
 `
+*/
 
 const StyledMenu = styled.div`
   margin-left: 0.5rem;
@@ -142,6 +146,7 @@ const InternalMenuItem = styled(Link)`
   }
 `
 
+/*
 const InternalLinkMenuItem = styled(InternalMenuItem)`
   display: flex;
   flex-direction: row;
@@ -176,55 +181,56 @@ const ToggleMenuItem = styled.button`
     text-decoration: none;
   }
 `
+*/
 
-const CODE_LINK = 'https://github.com/Uniswap/uniswap-interface'
+// const CODE_LINK = 'https://github.com/Uniswap/uniswap-interface'
 
-function LanguageMenuItem({ locale, active, key }: { locale: SupportedLocale; active: boolean; key: string }) {
-  const { to, onClick } = useLocationLinkProps(locale)
+// function LanguageMenuItem({ locale, active, key }: { locale: SupportedLocale; active: boolean; key: string }) {
+//   const { to, onClick } = useLocationLinkProps(locale)
 
-  if (!to) return null
+//   if (!to) return null
 
-  return (
-    <InternalLinkMenuItem onClick={onClick} key={key} to={to}>
-      <div>{LOCALE_LABEL[locale]}</div>
-      {active && <Check opacity={0.6} size={16} />}
-    </InternalLinkMenuItem>
-  )
-}
+//   return (
+//     <InternalLinkMenuItem onClick={onClick} key={key} to={to}>
+//       <div>{LOCALE_LABEL[locale]}</div>
+//       {active && <Check opacity={0.6} size={16} />}
+//     </InternalLinkMenuItem>
+//   )
+// }
 
-function LanguageMenu({ close }: { close: () => void }) {
-  const activeLocale = useActiveLocale()
+// function LanguageMenu({ close }: { close: () => void }) {
+//   const activeLocale = useActiveLocale()
 
-  return (
-    <MenuFlyout>
-      <ToggleMenuItem onClick={close}>
-        <ChevronLeft size={16} />
-      </ToggleMenuItem>
-      {SUPPORTED_LOCALES.map((locale) => (
-        <LanguageMenuItem locale={locale} active={activeLocale === locale} key={locale} />
-      ))}
-    </MenuFlyout>
-  )
-}
+//   return (
+//     <MenuFlyout>
+//       <ToggleMenuItem onClick={close}>
+//         <ChevronLeft size={16} />
+//       </ToggleMenuItem>
+//       {SUPPORTED_LOCALES.map((locale) => (
+//         <LanguageMenuItem locale={locale} active={activeLocale === locale} key={locale} />
+//       ))}
+//     </MenuFlyout>
+//   )
+// }
 
 export default function Menu() {
-  const { account, chainId } = useActiveWeb3React()
+  // const { account, chainId } = useActiveWeb3React()
 
   const node = useRef<HTMLDivElement>()
   const open = useModalOpen(ApplicationModal.MENU)
   const toggle = useToggleModal(ApplicationModal.MENU)
   useOnClickOutside(node, open ? toggle : undefined)
-  const openClaimModal = useToggleModal(ApplicationModal.ADDRESS_CLAIM)
-  const showUNIClaimOption = Boolean(!!account && !!chainId && !L2_CHAIN_IDS.includes(chainId))
-  const { infoLink } = CHAIN_INFO[chainId ? chainId : SupportedChainId.MAINNET]
+  // const openClaimModal = useToggleModal(ApplicationModal.ADDRESS_CLAIM)
+  // const showUNIClaimOption = Boolean(!!account && !!chainId && !L2_CHAIN_IDS.includes(chainId))
+  // const { infoLink } = CHAIN_INFO[chainId ? chainId : SupportedChainId.MAINNET]
 
-  const [darkMode, toggleDarkMode] = useDarkModeManager()
+  // const [darkMode, toggleDarkMode] = useDarkModeManager()
 
-  const [menu, setMenu] = useState<'main' | 'lang'>('main')
+  // const [menu, setMenu] = useState<'main' | 'lang'>('main')
 
-  useEffect(() => {
-    setMenu('main')
-  }, [open])
+  // useEffect(() => {
+  //   setMenu('main')
+  // }, [open])
 
   return (
     // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451
