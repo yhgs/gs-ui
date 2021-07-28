@@ -229,10 +229,24 @@ export default function Menu() {
   return (
     // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451
     <StyledMenu ref={node as any}>
-      <StyledMenuButton onClick={toggle}>
+      <MenuItem href={'https://uniswap.org/'}>
+        <div>
+          <Trans>About</Trans>
+        </div>
+      </MenuItem>
+      <MenuItem href={'https://docs.uniswap.org/'}>
+        <div>
+          <Trans>Docs</Trans>
+        </div>
+      </MenuItem>
+      <MenuItem href={'https://github.com/yhgs/gs-ui'}>
+        <div>
+          <Trans>Code</Trans>
+        </div>
+      </MenuItem>
+      {/* <StyledMenuButton onClick={toggle}>
         <StyledMenuIcon />
       </StyledMenuButton>
-
       {open &&
         (() => {
           switch (menu) {
@@ -296,7 +310,7 @@ export default function Menu() {
                 </MenuFlyout>
               )
           }
-        })()}
+        })()} */}
     </StyledMenu>
   )
 }

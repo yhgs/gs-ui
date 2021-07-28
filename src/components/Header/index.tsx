@@ -11,7 +11,7 @@ import { useUserHasSubmittedClaim } from 'state/transactions/hooks'
 import { useDarkModeManager } from 'state/user/hooks'
 import { useETHBalances } from 'state/wallet/hooks'
 import styled from 'styled-components/macro'
-import Logo from '../../assets/svg/logo.svg'
+import Logo from '../../assets/svg/arrows-swap-red.svg'
 import LogoDark from '../../assets/svg/logo_white.svg'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { ExternalLink, TYPE } from '../../theme'
@@ -264,10 +264,10 @@ export default function Header() {
       </Modal>
       <Title href=".">
         <UniIcon>
-          <img width={'24px'} src={darkMode ? LogoDark : Logo} alt="logo" />
+          <img width={'30px'} src={darkMode ? LogoDark : Logo} alt="logo" />
         </UniIcon>
       </Title>
-      <HeaderLinks>
+      {/* <HeaderLinks>
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
           <Trans>Swap</Trans>
         </StyledNavLink>
@@ -293,12 +293,12 @@ export default function Header() {
           <Trans>Charts</Trans>
           <sup>↗</sup>
         </StyledExternalLink>
-      </HeaderLinks>
+      </HeaderLinks> */}
 
       <HeaderControls>
-        <NetworkCard />
+        {/* <NetworkCard /> */}
         <HeaderElement>
-          {availableClaim && !showClaimPopup && (
+          {/* {availableClaim && !showClaimPopup && (
             <UNIWrapper onClick={toggleClaimModal}>
               <UNIAmount active={!!account && !availableClaim} style={{ pointerEvents: 'auto' }}>
                 <TYPE.white padding="0 2px">
@@ -313,15 +313,15 @@ export default function Header() {
               </UNIAmount>
               <CardNoise />
             </UNIWrapper>
-          )}
-          <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
+          )} */}
+          {/* <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
             {account && userEthBalance ? (
               <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
                 <Trans>{userEthBalance?.toSignificant(3)} ETH</Trans>
               </BalanceText>
             ) : null}
             <Web3Status />
-          </AccountElement>
+          </AccountElement> */}
           <Menu />
         </HeaderElement>
       </HeaderControls>
