@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import useScrollPosition from '@react-hook/window-scroll'
-import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
+// import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
 import { darken } from 'polished'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
@@ -240,6 +240,7 @@ const StyledExternalLink = styled(ExternalLink).attrs({
 `
 
 export default function Header() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { account, chainId } = useActiveWeb3React()
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
@@ -256,7 +257,7 @@ export default function Header() {
 
   const scrollY = useScrollPosition()
 
-  const { infoLink } = CHAIN_INFO[chainId ? chainId : SupportedChainId.MAINNET]
+  // const { infoLink } = CHAIN_INFO[chainId ? chainId : SupportedChainId.MAINNET]
   return (
     <HeaderFrame showBackground={scrollY > 45}>
       <ClaimModal />
@@ -272,27 +273,14 @@ export default function Header() {
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
           <Trans>Swap</Trans>
         </StyledNavLink>
-        <StyledNavLink
-          id={`pool-nav-link`}
-          to={'/pool'}
-          isActive={(match, { pathname }) =>
-            Boolean(match) ||
-            pathname.startsWith('/add') ||
-            pathname.startsWith('/remove') ||
-            pathname.startsWith('/increase') ||
-            pathname.startsWith('/find')
-          }
+        <StyledExternalLink
+          id={`stake-nav-link`}
+          href={'https://race.coderrect.com/t/7a250d9706673582212/greenpaper.pdf'}
         >
-          <Trans>Pool</Trans>
-        </StyledNavLink>
-        {chainId && chainId === SupportedChainId.MAINNET && (
-          <StyledNavLink id={`stake-nav-link`} to={'/vote'}>
-            <Trans>Vote</Trans>
-          </StyledNavLink>
-        )}
-        <StyledExternalLink id={`stake-nav-link`} href={infoLink}>
-          <Trans>Charts</Trans>
-          <sup>↗</sup>
+          <Trans>GreenCore Paper</Trans>
+        </StyledExternalLink>
+        <StyledExternalLink id={`stake-nav-link`} href={'https://github.com/yhgs/gs-ui'}>
+          <Trans>Code</Trans>
         </StyledExternalLink>
       </HeaderLinks>
 

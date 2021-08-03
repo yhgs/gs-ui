@@ -5,6 +5,7 @@ import { SupportedChainId } from './chains'
 
 type AddressMap = { [chainId: number]: string }
 
+// UNI Approve Contract address
 export const UNI_ADDRESS: AddressMap = constructSameAddressMap('0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984')
 export const MULTICALL_ADDRESS: AddressMap = {
   ...constructSameAddressMap('0x1F98415757620B543A52E61c46B32eB19261F984', [SupportedChainId.OPTIMISTIC_KOVAN]),
@@ -14,6 +15,9 @@ export const MULTICALL_ADDRESS: AddressMap = {
 }
 export const V2_FACTORY_ADDRESSES: AddressMap = constructSameAddressMap(V2_FACTORY_ADDRESS)
 export const V2_ROUTER_ADDRESS: AddressMap = constructSameAddressMap('0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D')
+// green swap contract
+// 0x5f313a23fa7f929aa281000ae7225fb342ad176d
+export const GREENSWAP_ADDRESS: AddressMap = constructSameAddressMap('0x5f313a23fa7f929aa281000ae7225fb342ad176d')
 
 /**
  * The older V0 governance account

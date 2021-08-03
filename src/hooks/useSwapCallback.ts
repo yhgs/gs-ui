@@ -1,6 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
-import { Router, Trade as V2Trade } from '@uniswap/v2-sdk'
+// import { Router, Trade as V2Trade } from '@uniswap/v2-sdk'
+import { Trade as V2Trade } from '@uniswap/v2-sdk'
+import { Router } from './useGreenSwapRouter'
 import { SwapRouter, Trade as V3Trade } from '@uniswap/v3-sdk'
 import { Currency, Percent, TradeType } from '@uniswap/sdk-core'
 import { useMemo } from 'react'
@@ -68,7 +70,14 @@ function useSwapCallArguments(
 
   return useMemo(() => {
     if (!trade || !recipient || !library || !account || !chainId || !deadline) return []
-
+    // console.log('[hooks/useSwapCallback.ts] trade')
+    // console.log(trade)
+    // console.log('[hooks/useSwapCallback.ts] deadline')
+    // console.log(deadline)
+    // console.log('[hooks/useSwapCallback.ts] argentWalletContract')
+    // console.log(argentWalletContract)
+    // console.log('[hooks/useSwapCallback.ts] routerContract')
+    // console.log(routerContract)
     if (trade instanceof V2Trade) {
       if (!routerContract) return []
       const swapMethods = []
@@ -81,7 +90,8 @@ function useSwapCallArguments(
           deadline: deadline.toNumber(),
         })
       )
-
+      // console.log('[hooks/useSwapCallback.ts] swapMethods')
+      // console.log(swapMethods)
       if (trade.tradeType === TradeType.EXACT_INPUT) {
         swapMethods.push(
           Router.swapCallParameters(trade, {
@@ -93,6 +103,7 @@ function useSwapCallArguments(
         )
       }
       return swapMethods.map(({ methodName, args, value }) => {
+        // console.log('[useGreenSwapRounter] methodName: ' + methodName)
         if (argentWalletContract && trade.inputAmount.currency.isToken) {
           return {
             address: argentWalletContract.address,
@@ -240,6 +251,8 @@ export function useSwapCallback(
   const { account, chainId, library } = useActiveWeb3React()
 
   const swapCalls = useSwapCallArguments(trade, allowedSlippage, recipientAddressOrName, signatureData)
+  // console.log('[hooks/useSwapCallback.ts] swapCalls')
+  // console.log(swapCalls)
 
   const addTransaction = useTransactionAdder()
 
@@ -263,8 +276,12 @@ export function useSwapCallback(
       callback: async function onSwap(): Promise<string> {
         const estimatedCalls: SwapCallEstimate[] = await Promise.all(
           swapCalls.map((call) => {
+            // const { address, calldata, value } = call
             const { address, calldata, value } = call
-
+            // ----
+            // console.trace()
+            // console.log('[hooks/useSwapCallback.ts] call')
+            // console.log(call)
             const tx =
               !value || isZero(value)
                 ? { from: account, to: address, data: calldata }
@@ -274,7 +291,9 @@ export function useSwapCallback(
                     data: calldata,
                     value,
                   }
-
+            // console.log('[hooks/useSwapCallback.ts] tx')
+            // console.log(tx)
+            // console.log('[hooks/useSwapCallback.ts] before estimateGas')
             return library
               .estimateGas(tx)
               .then((gasEstimate) => {
@@ -320,7 +339,7 @@ export function useSwapCallback(
         const {
           call: { address, calldata, value },
         } = bestCallOption
-
+        console.log('[from] ' + account + ', [to] ' + address)
         return library
           .getSigner()
           .sendTransaction({

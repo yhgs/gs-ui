@@ -6,7 +6,7 @@ import { abi as MERKLE_DISTRIBUTOR_ABI } from '@uniswap/merkle-distributor/build
 import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import { abi as QuoterABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
 import { abi as V2MigratorABI } from '@uniswap/v3-periphery/artifacts/contracts/V3Migrator.sol/V3Migrator.json'
-import { abi as IUniswapV2Router02ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
+// import { abi as IUniswapV2Router02ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
 import { abi as MulticallABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/UniswapInterfaceMulticall.sol/UniswapInterfaceMulticall.json'
 
 import ARGENT_WALLET_DETECTOR_ABI from 'abis/argent-wallet-detector.json'
@@ -17,6 +17,10 @@ import ERC20_BYTES32_ABI from 'abis/erc20_bytes32.json'
 import WETH_ABI from 'abis/weth.json'
 import EIP_2612 from 'abis/eip_2612.json'
 
+// todo: does XYZ3.sol has an abi json file?
+// create a hackish abi json file to make the interface lookup happy for now
+import { abi as IGreenSwapRouterABI } from 'abis/greenSwapRouter.json'
+
 import {
   NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
   QUOTER_ADDRESSES,
@@ -24,7 +28,8 @@ import {
   ARGENT_WALLET_DETECTOR_ADDRESS,
   MERKLE_DISTRIBUTOR_ADDRESS,
   MULTICALL_ADDRESS,
-  V2_ROUTER_ADDRESS,
+  // V2_ROUTER_ADDRESS,
+  GREENSWAP_ADDRESS,
   ENS_REGISTRAR_ADDRESSES,
   GOVERNANCE_ALPHA_V0_ADDRESSES,
   GOVERNANCE_ALPHA_V1_ADDRESSES,
@@ -99,7 +104,8 @@ export function usePairContract(pairAddress?: string, withSignerIfPossible?: boo
 }
 
 export function useV2RouterContract(): Contract | null {
-  return useContract(V2_ROUTER_ADDRESS, IUniswapV2Router02ABI, true)
+  // return useContract(V2_ROUTER_ADDRESS, IUniswapV2Router02ABI, true)
+  return useContract(GREENSWAP_ADDRESS, IGreenSwapRouterABI, true)
 }
 
 export function useMulticall2Contract() {

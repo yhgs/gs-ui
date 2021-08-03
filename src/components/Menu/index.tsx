@@ -3,10 +3,10 @@ import {
   BookOpen,
   Code,
   Info,
-  MessageCircle,
-  PieChart,
-  Moon,
-  Sun,
+  // MessageCircle,
+  // PieChart,
+  // Moon,
+  // Sun,
   ChevronRight,
   ChevronLeft,
   Check,
@@ -14,16 +14,15 @@ import {
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components/macro'
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg'
-import { useActiveWeb3React } from '../../hooks/web3'
+// import { useActiveWeb3React } from '../../hooks/web3'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useToggleModal } from '../../state/application/hooks'
 import { Trans } from '@lingui/macro'
 import { ExternalLink } from '../../theme'
-import { ButtonPrimary } from '../Button'
-import { useDarkModeManager } from 'state/user/hooks'
-
-import { L2_CHAIN_IDS, CHAIN_INFO, SupportedChainId } from 'constants/chains'
+// import { ButtonPrimary } from '../Button'
+// import { useDarkModeManager } from 'state/user/hooks'
+// import { L2_CHAIN_IDS, CHAIN_INFO, SupportedChainId } from 'constants/chains'
 import { LOCALE_LABEL, SupportedLocale, SUPPORTED_LOCALES } from 'constants/locales'
 import { useLocationLinkProps } from 'hooks/useLocationLinkProps'
 import { useActiveLocale } from 'hooks/useActiveLocale'
@@ -65,11 +64,11 @@ const StyledMenuButton = styled.button`
   }
 `
 
-const UNIbutton = styled(ButtonPrimary)`
-  background-color: ${({ theme }) => theme.bg3};
-  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #ff007a 0%, #2172e5 100%), #edeef2;
-  border: none;
-`
+// const UNIbutton = styled(ButtonPrimary)`
+//   background-color: ${({ theme }) => theme.bg3};
+//   background: radial-gradient(174.47% 188.91% at 1.84% 0%, #ff007a 0%, #2172e5 100%), #edeef2;
+//   border: none;
+// `
 
 const StyledMenu = styled.div`
   margin-left: 0.5rem;
@@ -177,7 +176,7 @@ const ToggleMenuItem = styled.button`
   }
 `
 
-const CODE_LINK = 'https://github.com/Uniswap/uniswap-interface'
+// const CODE_LINK = 'https://github.com/Uniswap/uniswap-interface'
 
 function LanguageMenuItem({ locale, active, key }: { locale: SupportedLocale; active: boolean; key: string }) {
   const { to, onClick } = useLocationLinkProps(locale)
@@ -208,17 +207,17 @@ function LanguageMenu({ close }: { close: () => void }) {
 }
 
 export default function Menu() {
-  const { account, chainId } = useActiveWeb3React()
+  // const { account, chainId } = useActiveWeb3React()
 
   const node = useRef<HTMLDivElement>()
   const open = useModalOpen(ApplicationModal.MENU)
   const toggle = useToggleModal(ApplicationModal.MENU)
   useOnClickOutside(node, open ? toggle : undefined)
-  const openClaimModal = useToggleModal(ApplicationModal.ADDRESS_CLAIM)
-  const showUNIClaimOption = Boolean(!!account && !!chainId && !L2_CHAIN_IDS.includes(chainId))
-  const { infoLink } = CHAIN_INFO[chainId ? chainId : SupportedChainId.MAINNET]
+  // const openClaimModal = useToggleModal(ApplicationModal.ADDRESS_CLAIM)
+  // const showUNIClaimOption = Boolean(!!account && !!chainId && !L2_CHAIN_IDS.includes(chainId))
+  // const { infoLink } = CHAIN_INFO[chainId ? chainId : SupportedChainId.MAINNET]
 
-  const [darkMode, toggleDarkMode] = useDarkModeManager()
+  // const [darkMode, toggleDarkMode] = useDarkModeManager()
 
   const [menu, setMenu] = useState<'main' | 'lang'>('main')
 
@@ -242,35 +241,23 @@ export default function Menu() {
             default:
               return (
                 <MenuFlyout>
-                  <MenuItem href="https://uniswap.org/">
+                  <MenuItem href="https://greenswap.tech/">
                     <div>
                       <Trans>About</Trans>
                     </div>
                     <Info opacity={0.6} size={16} />
                   </MenuItem>
-                  <MenuItem href="https://docs.uniswap.org/">
+                  <MenuItem href="https://greenswap.tech/doc">
                     <div>
                       <Trans>Docs</Trans>
                     </div>
                     <BookOpen opacity={0.6} size={16} />
                   </MenuItem>
-                  <MenuItem href={CODE_LINK}>
+                  <MenuItem href={'https://github.com/yhgs/gs-ui'}>
                     <div>
                       <Trans>Code</Trans>
                     </div>
                     <Code opacity={0.6} size={16} />
-                  </MenuItem>
-                  <MenuItem href="https://discord.gg/FCfyBSbCU5">
-                    <div>
-                      <Trans>Discord</Trans>
-                    </div>
-                    <MessageCircle opacity={0.6} size={16} />
-                  </MenuItem>
-                  <MenuItem href={infoLink}>
-                    <div>
-                      <Trans>Analytics</Trans>
-                    </div>
-                    <PieChart opacity={0.6} size={16} />
                   </MenuItem>
                   <ToggleMenuItem onClick={() => setMenu('lang')}>
                     <div>
@@ -278,21 +265,10 @@ export default function Menu() {
                     </div>
                     <ChevronRight size={16} opacity={0.6} />
                   </ToggleMenuItem>
-                  <ToggleMenuItem onClick={() => toggleDarkMode()}>
+                  {/* <ToggleMenuItem onClick={() => toggleDarkMode()}>
                     <div>{darkMode ? <Trans>Light Theme</Trans> : <Trans>Dark Theme</Trans>}</div>
                     {darkMode ? <Moon opacity={0.6} size={16} /> : <Sun opacity={0.6} size={16} />}
-                  </ToggleMenuItem>
-                  {showUNIClaimOption && (
-                    <UNIbutton
-                      onClick={openClaimModal}
-                      padding="8px 16px"
-                      width="100%"
-                      $borderRadius="12px"
-                      mt="0.5rem"
-                    >
-                      <Trans>Claim UNI</Trans>
-                    </UNIbutton>
-                  )}
+                  </ToggleMenuItem> */}
                 </MenuFlyout>
               )
           }

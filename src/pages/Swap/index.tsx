@@ -3,30 +3,36 @@ import { Currency, CurrencyAmount, Token, TradeType } from '@uniswap/sdk-core'
 import { Trade as V2Trade } from '@uniswap/v2-sdk'
 import { Trade as V3Trade } from '@uniswap/v3-sdk'
 import { NetworkAlert } from 'components/NetworkAlert/NetworkAlert'
-import { AdvancedSwapDetails } from 'components/swap/AdvancedSwapDetails'
+// import { AdvancedSwapDetails } from 'components/swap/AdvancedSwapDetails'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
-import { MouseoverTooltip, MouseoverTooltipContent } from 'components/Tooltip'
+// import { MouseoverTooltip, MouseoverTooltipContent } from 'components/Tooltip'
+import { MouseoverTooltip } from 'components/Tooltip'
 import JSBI from 'jsbi'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { ArrowDown, ArrowLeft, CheckCircle, HelpCircle, Info } from 'react-feather'
+// import { ArrowDown, ArrowLeft, CheckCircle, HelpCircle, Info } from 'react-feather'
+import { ArrowDown, CheckCircle, HelpCircle } from 'react-feather'
 import ReactGA from 'react-ga'
-import { Link, RouteComponentProps } from 'react-router-dom'
+// import { Link, RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps } from 'react-router-dom'
 import { Text } from 'rebass'
-import styled, { ThemeContext } from 'styled-components/macro'
+// import styled, { ThemeContext } from 'styled-components/macro'
+import { ThemeContext } from 'styled-components/macro'
 import AddressInputPanel from '../../components/AddressInputPanel'
-import { ButtonConfirmed, ButtonError, ButtonGray, ButtonLight, ButtonPrimary } from '../../components/Button'
+// import { ButtonConfirmed, ButtonError, ButtonGray, ButtonLight, ButtonPrimary } from '../../components/Button'
+import { ButtonConfirmed, ButtonError, ButtonLight, ButtonPrimary } from '../../components/Button'
 import { GreyCard } from '../../components/Card'
 import { AutoColumn } from '../../components/Column'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import CurrencyLogo from '../../components/CurrencyLogo'
 import Loader from '../../components/Loader'
-import Row, { AutoRow, RowFixed } from '../../components/Row'
-import BetterTradeLink from '../../components/swap/BetterTradeLink'
+// import Row, { AutoRow, RowFixed } from '../../components/Row'
+import { AutoRow } from '../../components/Row'
+// import BetterTradeLink from '../../components/swap/BetterTradeLink'
 import confirmPriceImpactWithoutFee from '../../components/swap/confirmPriceImpactWithoutFee'
 import ConfirmSwapModal from '../../components/swap/ConfirmSwapModal'
 import { ArrowWrapper, Dots, SwapCallbackError, Wrapper } from '../../components/swap/styleds'
 import SwapHeader from '../../components/swap/SwapHeader'
-import TradePrice from '../../components/swap/TradePrice'
+// import TradePrice from '../../components/swap/TradePrice'
 import { SwitchLocaleLink } from '../../components/SwitchLocaleLink'
 import TokenWarningModal from '../../components/TokenWarningModal'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
@@ -50,23 +56,24 @@ import {
   useSwapState,
 } from '../../state/swap/hooks'
 import { useExpertModeManager, useUserSingleHopOnly } from '../../state/user/hooks'
-import { HideSmall, LinkStyledButton, TYPE } from '../../theme'
+// import { HideSmall, LinkStyledButton, TYPE } from '../../theme'
+import { LinkStyledButton, TYPE } from '../../theme'
 import { computeFiatValuePriceImpact } from '../../utils/computeFiatValuePriceImpact'
 import { getTradeVersion } from '../../utils/getTradeVersion'
-import { isTradeBetter } from '../../utils/isTradeBetter'
+// import { isTradeBetter } from '../../utils/isTradeBetter'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { warningSeverity } from '../../utils/prices'
 import AppBody from '../AppBody'
 
-const StyledInfo = styled(Info)`
-  opacity: 0.4;
-  color: ${({ theme }) => theme.text1};
-  height: 16px;
-  width: 16px;
-  :hover {
-    opacity: 0.8;
-  }
-`
+// const StyledInfo = styled(Info)`
+//   opacity: 0.4;
+//   color: ${({ theme }) => theme.text1};
+//   height: 16px;
+//   width: 16px;
+//   :hover {
+//     opacity: 0.8;
+//   }
+// `
 
 export default function Swap({ history }: RouteComponentProps) {
   const { account } = useActiveWeb3React()
@@ -108,7 +115,9 @@ export default function Swap({ history }: RouteComponentProps) {
   // swap state
   const { independentField, typedValue, recipient } = useSwapState()
   const {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     v2Trade,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     v3TradeState: { trade: v3Trade, state: v3TradeState },
     toggledTrade: trade,
     allowedSlippage,
@@ -242,15 +251,22 @@ export default function Swap({ history }: RouteComponentProps) {
   const [singleHopOnly] = useUserSingleHopOnly()
 
   const handleSwap = useCallback(() => {
+    // console.log('[pages/Swap/index.tsx] enter handleSwap')
     if (!swapCallback) {
       return
     }
     if (priceImpact && !confirmPriceImpactWithoutFee(priceImpact)) {
       return
     }
+    // console.log('[pages/Swap/index.tsx] before setSwapState')
     setSwapState({ attemptingTxn: true, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: undefined })
+    // console.log('[pages/Swap/index.tsx] tradeToConfirm')
+    // console.log(tradeToConfirm)
+    // console.log('[pages/Swap/index.tsx] before gas price/limit prompt')
     swapCallback()
       .then((hash) => {
+        // console.log('[pages/Swap/index.tsx] after gas price/limit prompt')
+        // console.log(tradeToConfirm)
         setSwapState({ attemptingTxn: false, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: hash })
         ReactGA.event({
           category: 'Swap',
@@ -290,6 +306,7 @@ export default function Swap({ history }: RouteComponentProps) {
   ])
 
   // errors
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showInverted, setShowInverted] = useState<boolean>(false)
 
   // warnings on the greater of fiat value price impact and execution price impact
@@ -432,7 +449,7 @@ export default function Swap({ history }: RouteComponentProps) {
               </>
             ) : null}
 
-            {showWrap ? null : (
+            {/* {showWrap ? null : (
               <Row style={{ justifyContent: !trade ? 'center' : 'space-between' }}>
                 <RowFixed>
                   {[V3TradeState.VALID, V3TradeState.SYNCING, V3TradeState.NO_ROUTE_FOUND].includes(v3TradeState) &&
@@ -501,7 +518,7 @@ export default function Swap({ history }: RouteComponentProps) {
                   </RowFixed>
                 ) : null}
               </Row>
-            )}
+            )} */}
 
             <div>
               {swapIsUnsupported ? (
@@ -564,7 +581,7 @@ export default function Swap({ history }: RouteComponentProps) {
                           {approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED ? (
                             <Trans>You can now trade {currencies[Field.INPUT]?.symbol}</Trans>
                           ) : (
-                            <Trans>Allow the Uniswap Protocol to use your {currencies[Field.INPUT]?.symbol}</Trans>
+                            <Trans>Allow the GreenSwap Protocol to use your {currencies[Field.INPUT]?.symbol}</Trans>
                           )}
                         </span>
                         {approvalState === ApprovalState.PENDING ? (
@@ -576,7 +593,7 @@ export default function Swap({ history }: RouteComponentProps) {
                           <MouseoverTooltip
                             text={
                               <Trans>
-                                You must give the Uniswap smart contracts permission to use your{' '}
+                                You must give the GreenSwap smart contracts permission to use your{' '}
                                 {currencies[Field.INPUT]?.symbol}. You only have to do this once per token.
                               </Trans>
                             }
@@ -588,6 +605,7 @@ export default function Swap({ history }: RouteComponentProps) {
                     </ButtonConfirmed>
                     <ButtonError
                       onClick={() => {
+                        // console.log('**** 596 ****')
                         if (isExpertMode) {
                           handleSwap()
                         } else {
@@ -625,6 +643,8 @@ export default function Swap({ history }: RouteComponentProps) {
                 <ButtonError
                   onClick={() => {
                     if (isExpertMode) {
+                      // console.log('*********** on swap 628 *****************')
+                      return
                       handleSwap()
                     } else {
                       setSwapState({
