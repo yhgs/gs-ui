@@ -109,9 +109,9 @@ export abstract class Router {
           // args = [amountOut, path, to, deadline]
           // -------------------------------------------------------------
           // greenswap:
-          // function swapExactETHForUSDC(uint256 amountOutMin, address to, uint256 deadline)
+          // function swapExactETHForUSDC(uint256 amountOutMin, uint256 deadline)
           methodName = 'swapExactETHForUSDC'
-          args = [amountOut, to, deadline]
+          args = [amountOut, deadline]
           value = amountIn
         } else if (etherOut) {
           // methodName = useFeeOnTransfer ? 'swapExactTokensForETHSupportingFeeOnTransferTokens' : 'swapExactUSDCForETH'
@@ -119,10 +119,11 @@ export abstract class Router {
           // args = [amountIn, amountOut, path, to, deadline]
           // -------------------------------------------------------------
           // greenswap:
-          // function swapExactUSDCForETH(uint256 amountOutMin, address to, uint256 deadline, uint256 amountIn)
+          // function swapExactUSDCForETH(uint256 amountOutMin, uint256 deadline, uint256 amountIn)
           methodName = 'swapExactUSDCForETH'
-          args = [amountOut, to, deadline, amountIn]
+          args = [amountOut, deadline, amountIn]
           value = ZERO_HEX
+          // console.log('[TradeType.EXACT_INPUT] amountOut = ' + amountOut + ', amountIn = ' + amountIn)
         } else {
           methodName = useFeeOnTransfer
             ? 'swapExactTokensForTokensSupportingFeeOnTransferTokens'
@@ -140,8 +141,8 @@ export abstract class Router {
           // args = [amountOut, path, to, deadline]
           // -------------------------------------------------------------
           // greenswap:
-          // function swapExactETHForUSDC(uint256 amountOutMin, address to, uint256 deadline)
-          args = [amountOut, to, deadline]
+          // function swapExactETHForUSDC(uint256 amountOutMin, uint256 deadline)
+          args = [amountOut, deadline]
           value = amountIn
         } else if (etherOut) {
           methodName = 'swapExactUSDCForETH'
@@ -149,9 +150,10 @@ export abstract class Router {
           // args = [amountOut, amountIn, path, to, deadline]
           // -------------------------------------------------------------
           // greenswap:
-          // function swapExactUSDCForETH(uint256 amountOutMin, address to, uint256 deadline, uint256 amountIn)
-          args = [amountOut, to, deadline, amountIn]
+          // function swapExactUSDCForETH(uint256 amountOutMin, uint256 deadline, uint256 amountIn)
+          args = [amountOut, deadline, amountIn]
           value = ZERO_HEX
+          // console.log('[TradeType.EXACT_OUTPUT] amountOut = ' + amountOut + ', amountIn = ' + amountIn)
         } else {
           methodName = 'swapTokensForExactTokens'
           // (uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
